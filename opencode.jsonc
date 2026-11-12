@@ -1,0 +1,21 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+
+  // Rust project: cargo check / clippy / fmt through rust-mcp.
+  // context7, interactive-shell and jina are enabled globally.
+  "mcp": {
+    "servers": {
+      "rust-mcp": {
+        "type": "local",
+        "command": [
+          "E:\\Projects\\OSP\\rust-mcp\\.venv\\Scripts\\python.exe",
+          "-m",
+          "rust_mcp"
+        ],
+        "environment": {
+          "PYTHONIOENCODING": "utf-8"
+        }
+      }
+    }
+  }
+}

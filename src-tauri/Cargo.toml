@@ -1,0 +1,47 @@
+[package]
+name = "auto-brightness"
+version = "0.1.0"
+description = "Windows auto-brightness app"
+authors = [""]
+edition = "2021"
+default-run = "auto-brightness"
+
+[lib]
+name = "auto_brightness_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[[bin]]
+name = "auto-brightness"
+path = "src/main.rs"
+
+[[bin]]
+name = "probe"
+path = "src/bin/probe.rs"
+
+[build-dependencies]
+tauri-build = "2.7.4"
+
+[dependencies]
+tauri = { version = "2.12.5", features = ["tray-icon"] }
+tauri-plugin-single-instance = "2.5.5"
+tauri-plugin-autostart = "2.7.0"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+wmi = "0.18.4"
+ddc-hi = { version = "0.4.1", default-features = false, features = ["ddc-winapi"] }
+windows = { version = "0.62", features = [
+  "Win32_Foundation",
+  "Win32_System_Com",
+  "Win32_System_Com_StructuredStorage",
+  "Win32_System_Power",
+  "Win32_Media_MediaFoundation",
+  "Win32_Media_DirectShow",
+  "Win32_Media_KernelStreaming",
+  "Win32_System_Ole",
+  "Win32_System_Variant",
+  "Win32_UI_Shell_PropertiesSystem",
+] }
+
+[features]
+default = ["custom-protocol"]
+custom-protocol = ["tauri/custom-protocol"]

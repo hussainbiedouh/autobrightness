@@ -1,0 +1,27 @@
+# Build outputs
+/src-tauri/target/
+/dist/
+/**/*.exe
+/**/*.msi
+/**/*.pdb
+
+# Tauri generated
+/src-tauri/gen/
+
+# Rust
+**/*.rs.bk
+
+# Logs/temp
+*.log
+*.tmp
+*.bak
+*.locked
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Local settings/artifacts
+*.local

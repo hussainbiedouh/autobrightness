@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AutoBrightness</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="titlebar">
+      <div class="drag" data-tauri-drag-region>
+        <div class="app-title">AUTOBRIGHTNESS</div>
+      </div>
+      <div class="window-controls">
+        <button id="btn-minimize" class="win-btn" title="Minimize" aria-label="Minimize">–</button>
+        <button id="btn-close" class="win-btn" title="Close" aria-label="Close">×</button>
+      </div>
+    </header>
+
+    <main class="content">
+      <section class="section">
+        <div class="section-label section-label-row">
+          <span>AMBIENT</span>
+          <button id="btn-calibrate" class="btn-inline" title="Set current average display brightness and current ambient light as new baselines.">Calibrate</button>
+        </div>
+        <div class="ambient-readout">
+          <span id="ambient-value" class="ambient-value tabular" title="Ambient light index (0–100) estimated from the camera sample.">--</span>
+          <span class="ambient-unit" title="Ambient light scale from 0 (dark) to 100 (bright).">/ 100</span>
+          <span id="ambient-mode" class="mode-badge" title="Camera sampling mode: LOCKED uses manual exposure; COARSE uses clipping-ratio fallback when manual exposure lock is unavailable.">--</span>
+        </div>
+        <canvas id="sparkline" width="408" height="26" aria-label="Ambient history" title="Recent ambient light samples over time."></canvas>
+        <div id="ambient-status" class="status-line" title="Current ambient sensor/camera status.">Waiting for first sample</div>
+      </section>
+
+      <section class="section">
+        <div class="section-label">DISPLAYS</div>
+        <div id="displays-list" class="displays-list"></div>
+      </section>
+
+      <section class="section">
+        <div class="section-label">SETTINGS</div>
+        <div class="settings-grid">
+          <label class="setting-row" for="interval-sec" title="How often to sample ambient light and adjust brightness (seconds).">
+            <span>Interval (s)</span>
+            <input id="interval-sec" type="number" min="1" step="1" class="input tabular" title="Sampling and adjustment interval in seconds (any positive value)." />
+          </label>
+          <label class="setting-row" for="sensitivity" title="How strongly target brightness responds to ambient light changes.">
+            <span>Sensitivity</span>
+            <input id="sensitivity" type="number" min="0.1" max="2" step="0.05" class="input tabular" title="Brightness response curve sensitivity (0.1–2.0). Higher = stronger response." />
+          </label>
+          <label class="setting-row toggle-row" for="battery-pause" title="Pause automatic brightness changes when running on battery below the threshold.">
+            <span>Pause on battery</span>
+            <span class="toggle">
+              <input id="battery-pause" type="checkbox" title="Enable pause-on-battery behavior." />
+              <span class="toggle-ui" aria-hidden="true"></span>
+            </span>
+          </label>
+          <label class="setting-row" for="battery-threshold" title="Battery percentage at or below which automation pauses (when enabled and reading is valid).">
+            <span>Battery threshold (%)</span>
+            <input id="battery-threshold" type="number" min="1" max="100" step="1" class="input tabular" title="Pause threshold in percent (1–100)." />
+          </label>
+          <label class="setting-row toggle-row" for="autostart" title="Start AutoBrightness with Windows and launch minimized to tray.">
+            <span>Start with Windows</span>
+            <span class="toggle">
+              <input id="autostart" type="checkbox" title="Enable or disable Windows autostart." />
+              <span class="toggle-ui" aria-hidden="true"></span>
+            </span>
+          </label>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span class="tabular footer-left" title="Application version.">v0.1.0 · <span id="footer-state" title="Current automation state and target brightness.">--</span></span>
+      <button id="btn-pause" class="btn-footer" title="Pause or resume automatic brightness adjustments.">Pause</button>
+    </footer>
+  </div>
+  <script src="main.js"></script>
+</body>
+</html>
